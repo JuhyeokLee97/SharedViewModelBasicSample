@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.devgeek.sharedviewmodelbasicsample.databinding.FragmentStartBinding
 import com.devgeek.sharedviewmodelbasicsample.viewModel.OrderViewModel
 
@@ -22,7 +23,12 @@ class StartFragment : Fragment() {
      */
     private var binding: FragmentStartBinding? = null
 
-    /** Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact */
+    /** Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+     *
+     * Q1. `by` keyword는 뭐야?
+     * Q2. `activityViewModels()`는 뭐야??
+     * Q3. `sharedViewModel`는 포기화 부분이 없는데 어떻게 사용되지???
+     * */
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     /** Inflate the layout for this fragment */
@@ -46,6 +52,16 @@ class StartFragment : Fragment() {
      */
     fun orderCupcake(quantity: Int){
         // Update the view model with the quantity
+        sharedViewModel.setQuantity(quantity)
+
+        // if no flavor is set in the view model yet, select vanilla as default flavor
+
+        if (sharedViewModel.hasNoFlavorSet()){
+            sharedViewModel.setFlavor(getString(R.string.vanilla))
+        }
+
+        // Navigate to the next destination to select the flavor for the cupcakes
+        findNavController().navigate(R.id.action_startFragment_to_flavorFragment)
     }
 
     /**
