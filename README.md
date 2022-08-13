@@ -1,3 +1,8 @@
+#Cupcake Application
+## 개요
+Jetpack.ViewModel를 공유 viewModel 형태로 사용하는 심플앱이다.
+
+
 ## OrderViewModel - SharedViewModel
 ### 개요
 #### 변수
